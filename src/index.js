@@ -1,14 +1,32 @@
 import './css/style.css';
-import Weather from './scripts/api';
+import Weather from './scripts/Weather';
 
-let currentWeather = new Weather('Philadelphia', 'f');
-let p = document.createElement('p');
-document.body.appendChild(p);
+let tempDiv = document.createElement('div');
+document.body.appendChild(tempDiv);
 
-// Option 3
-async function main() {
-  let result = await currentWeather.getCurrentTemp();
-  p.textContent = result;
-}
+let lowDiv = document.createElement('div');
+document.body.appendChild(lowDiv);
 
-main();
+let highDiv = document.createElement('div');
+document.body.appendChild(highDiv);
+
+let feelDiv = document.createElement('div');
+document.body.appendChild(feelDiv);
+
+let humidDiv = document.createElement('div');
+document.body.appendChild(humidDiv);
+
+let windDiv = document.createElement('div');
+document.body.appendChild(windDiv);
+
+let cityDiv = document.createElement('div');
+document.body.appendChild(cityDiv);
+
+let imgDiv = document.createElement('div');
+document.body.appendChild(imgDiv);
+
+let detailsDiv = document.createElement('div');
+document.body.appendChild(detailsDiv);
+
+let currentWeather = new Weather('Philadelphia');
+currentWeather.displayWeatherData(tempDiv, lowDiv, highDiv, feelDiv, humidDiv, windDiv, cityDiv, imgDiv, detailsDiv);
