@@ -1,3 +1,5 @@
+import { bgImages } from './backgroundImgLoader';
+
 class Weather {
   constructor(location, units = 'f') {
     this.location = location;
@@ -24,48 +26,44 @@ class Weather {
       }
       this.validCity = true
       let weatherData = await response.json();
-      console.log(weatherData);
       return weatherData;
     } catch (err) {
-      console.error(err);
       alert(err);
       this.validCity = false;
     }
   }
 
   // Use this to make only 1 API call with DOM elements as params
-  async displayWeatherData(temp, low, high, feel, humid, wind, city, imgDiv, details) {
+  async displayWeatherData(displayObject) {
     let result = await this.getWeatherData();
 
     if (this.validCity === true) {
-      temp.textContent = `${result.main.temp} °${this.tempUnit}`;
-      low.textContent = `${result.main.temp_min} °${this.tempUnit}`;
-      high.textContent = `${result.main.temp_max} °${this.tempUnit}`;
-      feel.textContent = `${result.main.feels_like} °${this.tempUnit}`;
-      humid.textContent = `${result.main.humidity} %`;
-      wind.textContent = `${result.wind.speed} ${this.speedUnit}`;
-      city.textContent = result.name;
+      displayObject.temp.textContent = `${result.main.temp} °${this.tempUnit}`;
+      displayObject.low.textContent = `L: ${result.main.temp_min} °${this.tempUnit}`;
+      displayObject.high.textContent = `H: ${result.main.temp_max} °${this.tempUnit}`;
+      displayObject.feel.textContent = `${result.main.feels_like} °${this.tempUnit}`;
+      displayObject.humid.textContent = `${result.main.humidity} %`;
+      displayObject.wind.textContent = `${result.wind.speed} ${this.speedUnit}`;
+      displayObject.city.textContent = result.name;
 
-      while (imgDiv.hasChildNodes()) {
-        imgDiv.removeChild(imgDiv.lastChild);
+      while (displayObject.imgDiv.hasChildNodes()) {
+        displayObject.imgDiv.removeChild(displayObject.imgDiv.lastChild);
       }
       let img = result.weather[0].icon;
       let weatherImg = document.createElement('img');
       weatherImg.src = `http://openweathermap.org/img/wn/${img}@2x.png`;
-      imgDiv.appendChild(weatherImg);
+      displayObject.imgDiv.appendChild(weatherImg);
 
       let description = result.weather[0].main;
       if (description === 'Clouds') {
-        details.textContent = 'Cloudy';
+        displayObject.details.textContent = 'Cloudy';
       } else if (description === 'Thunderstorm') {
-        details.textContent = 'Thunderstorms';
+        displayObject.details.textContent = 'Thunderstorms';
       } else {
-        details.textContent = description;
+        displayObject.details.textContent = description;
       }
 
-      /* document.body.style.backgroundImage = `url(./imgs/weather-backgrounds/${description}.jpg)`; */
-
-      console.log('valid city');
+      document.body.style.backgroundImage = `url(${bgImages[`${description}.jpg`]})`;
     }
   }
 }
