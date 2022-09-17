@@ -1,7 +1,35 @@
 import Weather from './Weather';
 import WeatherDisplayDivs from './WeatherDisplayDivs';
+import Search from '../imgs/search.svg';
+import Close from '../imgs/close.svg';
 
 function initLoad() {
+  let searchDiv = document.createElement('div');
+  searchDiv.classList.add('search');
+
+  let searchLabel = document.createElement('label');
+  searchLabel.setAttribute('for', 'searchbar');
+
+  let searchImg = document.createElement('img');
+  searchImg.src = `${Search}`;
+  searchImg.alt = 'search';
+
+  let searchbar = document.createElement('input');
+  searchbar.setAttribute('id', 'searchbar');
+  searchbar.setAttribute('type', 'search');
+  searchbar.setAttribute('name', 'searchbar');
+
+  let searchClose = document.createElement('img');
+  searchClose.classList.add('searchCancel');
+  searchClose.src = `${Close}`;
+  searchClose.alt = 'Cancel';
+
+  document.body.appendChild(searchDiv);
+  searchDiv.appendChild(searchLabel);
+  searchLabel.appendChild(searchImg);
+  searchDiv.appendChild(searchbar);
+  searchDiv.appendChild(searchClose);
+
   let location = 'philadelphia';
 
   let cityDiv = document.createElement('div');
@@ -71,7 +99,7 @@ function initLoad() {
 
   let windText = document.createElement('p');
   windText.classList.add('windText');
-  windText.textContent = 'Wind:';
+  windText.textContent = 'Wind Speed:';
 
   let windSpeed = document.createElement('div');
   windSpeed.classList.add('windSpeed');

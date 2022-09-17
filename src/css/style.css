@@ -17,6 +17,12 @@ body {
   align-items: center;
 }
 
+.search {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
 .conditionDiv,
 .tempRanges,
 .feelsLikeDiv,
