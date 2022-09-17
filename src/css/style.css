@@ -19,8 +19,50 @@ body {
 
 .search {
   display: flex;
-  justify-content: center;
   position: relative;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  width: min(50%, 350px);
+}
+
+.search label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search label:hover {
+  scale: 1.2;
+}
+
+.search input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 6px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background: none;
+  flex-grow: 1;
+}
+
+.search input:hover {
+  border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.search input:focus {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.search input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search img {
+  cursor: pointer;
 }
 
 .conditionDiv,

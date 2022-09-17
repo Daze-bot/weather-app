@@ -4,6 +4,8 @@ import Search from '../imgs/search.svg';
 import Close from '../imgs/close.svg';
 
 function initLoad() {
+  let location = 'philadelphia';
+  
   let searchDiv = document.createElement('div');
   searchDiv.classList.add('search');
 
@@ -29,8 +31,6 @@ function initLoad() {
   searchLabel.appendChild(searchImg);
   searchDiv.appendChild(searchbar);
   searchDiv.appendChild(searchClose);
-
-  let location = 'philadelphia';
 
   let cityDiv = document.createElement('div');
   cityDiv.classList.add('location');
