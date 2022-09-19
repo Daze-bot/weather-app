@@ -33,34 +33,45 @@ class Weather {
     }
   }
 
-  // Use this to make only 1 API call with DOM elements as params
-  async displayWeatherData(displayObject) {
+  // Use this to make only 1 API call
+  async displayWeatherData() {
     let result = await this.getWeatherData();
+    console.log(result);
+
+    let temp = document.querySelector('.currentTemp');
+    let low = document.querySelector('.lowTemp');
+    let high = document.querySelector('.highTemp');
+    let feel = document.querySelector('.feelsLikeTemp');
+    let humid = document.querySelector('.humidity');
+    let wind = document.querySelector('.windSpeed');
+    let city = document.querySelector('.location');
+    let imgDiv = document.querySelector('.conditionImg');
+    let details = document.querySelector('.currentConditon');
 
     if (this.validCity === true) {
-      displayObject.temp.textContent = `${result.main.temp} °${this.tempUnit}`;
-      displayObject.low.textContent = `L: ${result.main.temp_min} °${this.tempUnit}`;
-      displayObject.high.textContent = `H: ${result.main.temp_max} °${this.tempUnit}`;
-      displayObject.feel.textContent = `${result.main.feels_like} °${this.tempUnit}`;
-      displayObject.humid.textContent = `${result.main.humidity} %`;
-      displayObject.wind.textContent = `${result.wind.speed} ${this.speedUnit}`;
-      displayObject.city.textContent = result.name;
+      temp.textContent = `${Math.round(result.main.temp)}°`;
+      low.textContent = `L: ${Math.round(result.main.temp_min)}°`;
+      high.textContent = `H: ${Math.round(result.main.temp_max)}°`;
+      feel.textContent = `${Math.round(result.main.feels_like)}°`;
+      humid.textContent = `${result.main.humidity}%`;
+      wind.textContent = `${Math.round(result.wind.speed)}${this.speedUnit}`;
+      city.textContent = result.name;
 
-      while (displayObject.imgDiv.hasChildNodes()) {
-        displayObject.imgDiv.removeChild(displayObject.imgDiv.lastChild);
+      while (imgDiv.hasChildNodes()) {
+        imgDiv.removeChild(imgDiv.lastChild);
       }
       let img = result.weather[0].icon;
       let weatherImg = document.createElement('img');
       weatherImg.src = `http://openweathermap.org/img/wn/${img}@2x.png`;
-      displayObject.imgDiv.appendChild(weatherImg);
+      imgDiv.appendChild(weatherImg);
 
       let description = result.weather[0].main;
       if (description === 'Clouds') {
-        displayObject.details.textContent = 'Cloudy';
+        details.textContent = 'Cloudy';
       } else if (description === 'Thunderstorm') {
-        displayObject.details.textContent = 'Thunderstorms';
+        details.textContent = 'Thunderstorms';
       } else {
-        displayObject.details.textContent = description;
+        details.textContent = description;
       }
 
       document.body.style.backgroundImage = `url(${bgImages[`${description}.jpg`]})`;

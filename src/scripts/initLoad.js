@@ -1,20 +1,15 @@
-import Weather from './Weather';
-import WeatherDisplayDivs from './WeatherDisplayDivs';
-import Search from '../imgs/search.svg';
 import Close from '../imgs/close.svg';
 
 function initLoad() {
-  let location = 'philadelphia';
-  
+  document.body.appendChild(createHeader());
+  document.body.appendChild(createMain());
+}
+
+function createHeader() {
+  let header = document.createElement('header');
+
   let searchDiv = document.createElement('div');
   searchDiv.classList.add('search');
-
-  let searchLabel = document.createElement('label');
-  searchLabel.setAttribute('for', 'searchbar');
-
-  let searchImg = document.createElement('img');
-  searchImg.src = `${Search}`;
-  searchImg.alt = 'search';
 
   let searchbar = document.createElement('input');
   searchbar.setAttribute('id', 'searchbar');
@@ -26,19 +21,24 @@ function initLoad() {
   searchClose.src = `${Close}`;
   searchClose.alt = 'Cancel';
 
-  document.body.appendChild(searchDiv);
-  searchDiv.appendChild(searchLabel);
-  searchLabel.appendChild(searchImg);
+  header.appendChild(searchDiv);
   searchDiv.appendChild(searchbar);
   searchDiv.appendChild(searchClose);
 
+  return header;
+}
+
+function createMain() {
+  let main = document.createElement('main');
+
+  let mainInfo = document.createElement('div');
+  mainInfo.classList.add('mainInfo');
+
   let cityDiv = document.createElement('div');
   cityDiv.classList.add('location');
-  document.body.appendChild(cityDiv);
 
   let currentTemp = document.createElement('div');
   currentTemp.classList.add('currentTemp');
-  document.body.appendChild(currentTemp);
 
   let conditionDiv = document.createElement('div');
   conditionDiv.classList.add('conditionDiv');
@@ -49,9 +49,17 @@ function initLoad() {
   let imgDiv = document.createElement('div');
   imgDiv.classList.add('conditionImg');
 
+  main.appendChild(mainInfo);
+
+  mainInfo.appendChild(cityDiv);
+  mainInfo.appendChild(currentTemp);
+
+  mainInfo.appendChild(conditionDiv);
   conditionDiv.appendChild(detailsDiv);
   conditionDiv.appendChild(imgDiv);
-  document.body.appendChild(conditionDiv);
+
+  let secondaryInfo = document.createElement('div');
+  secondaryInfo.classList.add('secondaryInfo');
 
   let tempRange = document.createElement('div');
   tempRange.classList.add('tempRanges');
@@ -61,10 +69,6 @@ function initLoad() {
 
   let lowTemp = document.createElement('div');
   lowTemp.classList.add('lowTemp');
-
-  tempRange.appendChild(highTemp);
-  tempRange.appendChild(lowTemp);
-  document.body.appendChild(tempRange);
 
   let feelsLike = document.createElement('div');
   feelsLike.classList.add('feelsLikeDiv');
@@ -76,10 +80,6 @@ function initLoad() {
   let feelsTemp = document.createElement('div');
   feelsTemp.classList.add('feelsLikeTemp');
 
-  feelsLike.appendChild(feelsText);
-  feelsLike.appendChild(feelsTemp);
-  document.body.appendChild(feelsLike);
-
   let humidDiv = document.createElement('div');
   humidDiv.classList.add('humidityDiv');
 
@@ -90,29 +90,35 @@ function initLoad() {
   let humidity = document.createElement('div');
   humidity.classList.add('humidity');
 
-  humidDiv.appendChild(humidText);
-  humidDiv.appendChild(humidity);
-  document.body.appendChild(humidDiv);
-
   let windDiv = document.createElement('div');
   windDiv.classList.add('windDiv');
 
   let windText = document.createElement('p');
   windText.classList.add('windText');
-  windText.textContent = 'Wind Speed:';
+  windText.textContent = 'Wind:';
 
   let windSpeed = document.createElement('div');
   windSpeed.classList.add('windSpeed');
 
+  main.appendChild(secondaryInfo);
+
+  secondaryInfo.appendChild(tempRange);
+  tempRange.appendChild(highTemp);
+  tempRange.appendChild(lowTemp);
+
+  secondaryInfo.appendChild(feelsLike);
+  feelsLike.appendChild(feelsText);
+  feelsLike.appendChild(feelsTemp);
+
+  secondaryInfo.appendChild(humidDiv);
+  humidDiv.appendChild(humidText);
+  humidDiv.appendChild(humidity);
+
+  secondaryInfo.appendChild(windDiv);
   windDiv.appendChild(windText);
   windDiv.appendChild(windSpeed);
-  document.body.appendChild(windDiv);
 
-  let weatherDisplays = new WeatherDisplayDivs(currentTemp, lowTemp, highTemp, feelsTemp, humidity, windSpeed, cityDiv, imgDiv, detailsDiv)
-
-  let currentWeather = new Weather(location, 'f');
-
-  currentWeather.displayWeatherData(weatherDisplays);
+  return main;
 }
 
 export default initLoad;
