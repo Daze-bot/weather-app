@@ -1,8 +1,10 @@
 import Close from '../imgs/close.svg';
+import Weather from './Weather';
 
 function initLoad() {
   document.body.appendChild(createHeader());
   document.body.appendChild(createMain());
+  new Weather('philadelphia', 'f').displayWeatherData();
 }
 
 function createHeader() {
