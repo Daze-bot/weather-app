@@ -1,39 +1,38 @@
 import Weather from './Weather';
 
-let currentLocation = localStorage.getItem('currentLocation') || 'philadelphia';
-let weatherUnits = localStorage.getItem('weatherUnits') || 'f';
-
 function searchLocation() {
-  let search = document.querySelector('#searchbar').value;
-  new Weather(search, weatherUnits).displayWeatherData();
+  const search = document.querySelector('#searchbar').value;
+  const weatherUnit = localStorage.getItem('weatherUnits') || 'f';
+  new Weather(search, weatherUnit).displayWeatherData();
   saveLocation(search);
   clearSearch();
 }
 
-function clearSearch() {
-  let search = document.querySelector('#searchbar')
-  search.value = "";
-  search.focus();
-}
-
 function changeUnits() {
-  let unitInput = document.querySelector('.unitType');
+  const unitInput = document.querySelector('.unitType');
+  let currentUnit;
   if (unitInput.checked) {
-    weatherUnits = 'f';
+    currentUnit = 'f';
     document.querySelector('.unitC').style.color = 'white';
     document.querySelector('.unitF').style.color = 'black';
     document.querySelector('.unitC').style.transition = '.4s';
     document.querySelector('.unitF').style.transition = '.4s';
   } else {
-    weatherUnits = 'c';
+    currentUnit = 'c';
     document.querySelector('.unitF').style.color = 'white';
     document.querySelector('.unitC').style.color = 'black';
     document.querySelector('.unitC').style.transition = '.4s';
     document.querySelector('.unitF').style.transition = '.4s';
   }
-  let cityLocation = localStorage.getItem('currentLocation') || 'philadelphia';
-  new Weather(cityLocation, weatherUnits).displayWeatherData();
-  saveUnits(weatherUnits);
+  const cityLocation = localStorage.getItem('currentLocation') || 'philadelphia';
+  new Weather(cityLocation, currentUnit).displayWeatherData();
+  saveUnits(currentUnit);
+}
+
+function clearSearch() {
+  const search = document.querySelector('#searchbar');
+  search.value = '';
+  search.focus();
 }
 
 function saveLocation(location) {
@@ -45,10 +44,8 @@ function saveUnits(units) {
 }
 
 export {
-  currentLocation,
-  weatherUnits,
   clearSearch,
   searchLocation,
   changeUnits,
   saveLocation,
-}
+};
