@@ -11,7 +11,9 @@ const currentLocation = localStorage.getItem('currentLocation') || 'philadelphia
 const weatherUnits = localStorage.getItem('weatherUnits') || 'f';
 
 async function initLoad() {
+  // eslint-disable-next-line no-use-before-define
   document.body.appendChild(createHeader());
+  // eslint-disable-next-line no-use-before-define
   document.body.appendChild(createMain());
   const start = new Weather(currentLocation, weatherUnits);
   await start.getWeatherData();

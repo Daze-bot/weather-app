@@ -4,7 +4,9 @@ function searchLocation() {
   const search = document.querySelector('#searchbar').value;
   const weatherUnit = localStorage.getItem('weatherUnits') || 'f';
   new Weather(search, weatherUnit).displayWeatherData();
+  // eslint-disable-next-line no-use-before-define
   saveLocation(search);
+  // eslint-disable-next-line no-use-before-define
   clearSearch();
 }
 
@@ -26,6 +28,7 @@ function changeUnits() {
   }
   const cityLocation = localStorage.getItem('currentLocation') || 'philadelphia';
   new Weather(cityLocation, currentUnit).displayWeatherData();
+  // eslint-disable-next-line no-use-before-define
   saveUnits(currentUnit);
 }
 

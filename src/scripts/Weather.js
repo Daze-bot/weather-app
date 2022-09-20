@@ -14,6 +14,7 @@ class Weather {
     }
   }
 
+  // eslint-disable-next-line consistent-return
   async getWeatherData() {
     try {
       const response = await fetch('https://api.openweathermap.org/data/2.5/weather'
@@ -21,6 +22,7 @@ class Weather {
       + `&units=${this.units}`
       + '&APPID=59e393b0ab45a1585d147ab33d507f28');
       if (response.status === 404) {
+        // eslint-disable-next-line no-throw-literal
         throw `${this.location} not found! Double check your spelling.`;
       }
       this.validCity = true;
