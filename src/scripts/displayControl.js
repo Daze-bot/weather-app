@@ -31,7 +31,8 @@ function changeUnits() {
     document.querySelector('.unitC').style.transition = '.4s';
     document.querySelector('.unitF').style.transition = '.4s';
   }
-  new Weather(window.localStorage.currentLocation, weatherUnits).displayWeatherData();
+  let cityLocation = localStorage.getItem('currentLocation') || 'philadelphia';
+  new Weather(cityLocation, weatherUnits).displayWeatherData();
   saveUnits(weatherUnits);
 }
 

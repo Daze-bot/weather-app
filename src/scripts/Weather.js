@@ -42,7 +42,6 @@ class Weather {
   // Use this to make only 1 API call
   async displayWeatherData() {
     let result = await this.getWeatherData();
-    console.log(result);
 
     let temp = document.querySelector('.currentTemp');
     let low = document.querySelector('.lowTemp');
