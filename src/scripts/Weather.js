@@ -22,13 +22,19 @@ class Weather {
       `&units=${this.units}` + 
       `&APPID=59e393b0ab45a1585d147ab33d507f28`);
       if (response.status === 404) {
-        throw 'City not found!';
+        throw `City not found! Double check your spelling.`;
       }
       this.validCity = true
+      document.querySelector('.currentTemp').classList.remove('hidden');
+      document.querySelector('.conditionDiv').classList.remove('hidden');
+      document.querySelector('.secondaryInfo').classList.remove('hidden');
       let weatherData = await response.json();
       return weatherData;
     } catch (err) {
-      alert(err);
+      document.querySelector('.location').textContent = err;
+      document.querySelector('.currentTemp').classList.add('hidden');
+      document.querySelector('.conditionDiv').classList.add('hidden');
+      document.querySelector('.secondaryInfo').classList.add('hidden');
       this.validCity = false;
     }
   }
@@ -36,6 +42,7 @@ class Weather {
   // Use this to make only 1 API call
   async displayWeatherData() {
     let result = await this.getWeatherData();
+    console.log(result);
 
     let temp = document.querySelector('.currentTemp');
     let low = document.querySelector('.lowTemp');
@@ -48,7 +55,7 @@ class Weather {
     let details = document.querySelector('.currentConditon');
 
     if (this.validCity === true) {
-      temp.textContent = `${Math.round(result.main.temp)}°`;
+      temp.textContent = `${Math.round(result.main.temp)}`;
       low.textContent = `L: ${Math.round(result.main.temp_min)}°`;
       high.textContent = `H: ${Math.round(result.main.temp_max)}°`;
       feel.textContent = `${Math.round(result.main.feels_like)}°`;

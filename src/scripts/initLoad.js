@@ -1,10 +1,18 @@
 import Close from '../imgs/close.svg';
 import Weather from './Weather';
+import { currentLocation, weatherUnits, clearSearch, searchLocation, changeUnits, saveLocation } from './displayControl';
 
-function initLoad() {
+async function initLoad() {
   document.body.appendChild(createHeader());
   document.body.appendChild(createMain());
-  new Weather('philadelphia', 'f').displayWeatherData();
+  let start = new Weather(currentLocation, weatherUnits);
+  await start.getWeatherData();
+  if (start.validCity === true) {
+    start.displayWeatherData();
+  } else {
+    saveLocation('Philadelphia');
+    new Weather('Philadelphia', weatherUnits).displayWeatherData();
+  }
 }
 
 function createHeader() {
@@ -17,15 +25,56 @@ function createHeader() {
   searchbar.setAttribute('id', 'searchbar');
   searchbar.setAttribute('type', 'search');
   searchbar.setAttribute('name', 'searchbar');
+  searchbar.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      searchbar.blur();
+      searchLocation();
+    }
+  })
 
   let searchClose = document.createElement('img');
   searchClose.classList.add('searchCancel');
   searchClose.src = `${Close}`;
   searchClose.alt = 'Cancel';
+  searchClose.addEventListener('click', clearSearch);
 
+  let unitChanger = document.createElement('label');
+  unitChanger.classList.add('unitChanger');
+
+  let unitF = document.createElement('p');
+  unitF.classList.add('unitF');
+  unitF.textContent = "F";
+
+  let unitC = document.createElement('p');
+  unitC.classList.add('unitC');
+  unitC.textContent = "C";
+
+  let unitInput = document.createElement('input');
+  unitInput.type = 'checkbox';
+  unitInput.classList.add('unitType');
+
+  if (weatherUnits === 'f') {
+    unitInput.checked = false;
+    unitC.style.color = 'white';
+    unitF.style.color = 'black';
+  } else if (weatherUnits === 'c') {
+    unitInput.checked = true;
+    unitF.style.color = 'white';
+    unitC.style.color = 'black';
+  }
+
+  let unitSpan = document.createElement('span');
+  unitSpan.classList.add('slider');
+  unitSpan.addEventListener('click', changeUnits);
+  
   header.appendChild(searchDiv);
   searchDiv.appendChild(searchbar);
   searchDiv.appendChild(searchClose);
+  header.appendChild(unitChanger);
+  unitChanger.appendChild(unitF);
+  unitChanger.appendChild(unitC);
+  unitChanger.appendChild(unitInput);
+  unitChanger.appendChild(unitSpan);
 
   return header;
 }

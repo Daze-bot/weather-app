@@ -21,6 +21,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .search {
@@ -44,12 +45,13 @@ header {
 }
 
 .search input:hover {
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
 
 .search input:focus {
   outline: none;
   border: 1px solid rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .search input::-webkit-search-cancel-button {
@@ -61,6 +63,76 @@ header {
   cursor: pointer;
   position: absolute;
   right: 5px;
+}
+
+.searchCancel:hover {
+  animation: shake .6s;
+  animation-iteration-count: 1;
+}
+
+.unitChanger {
+  position: absolute;
+  right: 10px;
+  border-radius: 8px;
+  height: 20px;
+  width: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.unitF,
+.unitC {
+  font-size: .85rem;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.unitChanger input {
+  display: none;
+}
+
+.unitChanger input:checked + .slider::before {
+  transform: translateX(16px);
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .4s;
+  border-radius: 8px;
+  height: 20px;
+  width: 38px;
+  background: none;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 2px;
+  transition: .4s;
+  border: 1px solid white;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .85rem;
 }
 
 main {
@@ -80,24 +152,51 @@ main {
 
 .location {
   font-size: 3rem;
+  text-align: center;
 }
 
 .currentTemp {
   font-size: 5rem;
 }
 
+.currentTemp::after {
+  position: absolute;
+  content: "°";
+}
+
+.conditionDiv {
+  margin-top: -10px;
+}
+
+.currentConditon {
+  font-size: 2rem;
+  padding-left: 5px;
+}
+
 .conditionImg img {
-  height: 2rem;
+  height: 3rem;
 }
 
 .secondaryInfo {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.4);
   padding: 10px;
   border-radius: 8px;
   width: 150px;
+}
+
+.secondaryInfo p {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.highTemp {
+  color: rgb(150, 0, 0)
+}
+
+.lowTemp {
+  color: rgb(12, 63, 231);
 }
 
 .conditionDiv,
@@ -111,6 +210,21 @@ main {
   align-items: center;
 }
 
-.tempRanges {
-  padding: 0 8px;
+.location,
+.currentTemp,
+.conditionDiv {
+  text-shadow: 0 0 4px white;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes shake {
+  15%, 45%, 75% {
+    transform: translate3d(-0.5px, 0, 0) rotate(4deg);
+  }
+  30%, 60%, 90% {
+    transform: translate3d(0.5px, 0, 0) rotate(-4deg);
+  }
 }
